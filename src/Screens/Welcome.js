@@ -1,17 +1,18 @@
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image,ImageBackground} from 'react-native';
 import React from 'react';
 import {Button} from '../Componets/Button';
 import {Themes} from '../Appdata/colors';
-export default function Welcome() {
+import { NAVIGATION_NAME } from '../Appdata/NavigationName';
+export default function Welcome({navigation}) {
   return (
     <>
-      <View style={styles.container}>
+      <ImageBackground source={require('../Assets/Images/bgimg.jpg')} style={styles.container}>
         <Image
           source={require('../Assets/Images/logo.png')}
           style={styles.img}
         />
         <Text style={styles.title}>Welcome</Text>
-      </View>
+      </ImageBackground>
       <View style={styles.ButtonView}>
         <Button
           title={'SIGN IN'}
@@ -20,6 +21,7 @@ export default function Welcome() {
           textstyle={styles.txtstyle}
         />
         <Button
+        onPress={()=> navigation.navigate(NAVIGATION_NAME.REGISTER)}
           title={'NEW ACCOUNT'}
           disabled={false}
           style={styles.buttonstyle}
@@ -49,7 +51,7 @@ const styles = StyleSheet.create({
   },
   ButtonView: {
     // flex: 9,
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
     justifyContent: 'flex-end',
   },
   img: {

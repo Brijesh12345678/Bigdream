@@ -7,3 +7,11 @@ export const Button = ({title, onPress, style, disabled, textstyle}) => {
     </TouchableOpacity>
   );
 };
+
+export const SignUpButton = ({title, onPress, style, disabled, textstyle}) => {
+  return (
+    <TouchableOpacity onPress={onPress} style={style} disabled={disabled}>
+      <Text style={textstyle}>{title}</Text>
+    </TouchableOpacity>
+  );
+};
