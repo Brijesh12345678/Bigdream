@@ -3,5 +3,9 @@ export const Themes = {
     statusBar: '#01873e',
     button: '#232959',
     textColor: '#fff',
+    titleColor: '#272c64',
+    grey: 'lightgrey',
+    darkgrey: 'grey',
+    black: 'black',
   },
 };

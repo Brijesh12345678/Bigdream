@@ -1,12 +1,14 @@
-import {View, Text, StyleSheet, Image,ImageBackground} from 'react-native';
+import {View, Text, StyleSheet, Image, ImageBackground} from 'react-native';
 import React from 'react';
 import {Button} from '../Componets/Button';
 import {Themes} from '../Appdata/colors';
-import { NAVIGATION_NAME } from '../Appdata/NavigationName';
+import {NAVIGATION_NAME} from '../Appdata/NavigationName';
 export default function Welcome({navigation}) {
   return (
     <>
-      <ImageBackground source={require('../Assets/Images/bgimg.jpg')} style={styles.container}>
+      <ImageBackground
+        source={require('../Assets/Images/bgimg.jpg')}
+        style={styles.container}>
         <Image
           source={require('../Assets/Images/logo.png')}
           style={styles.img}
@@ -19,9 +21,10 @@ export default function Welcome({navigation}) {
           disabled={false}
           style={styles.buttonstyle}
           textstyle={styles.txtstyle}
+          onPress={() => navigation.navigate(NAVIGATION_NAME.MENU)}
         />
         <Button
-        onPress={()=> navigation.navigate(NAVIGATION_NAME.REGISTER)}
+          onPress={() => navigation.navigate(NAVIGATION_NAME.REGISTER)}
           title={'NEW ACCOUNT'}
           disabled={false}
           style={styles.buttonstyle}

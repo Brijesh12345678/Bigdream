@@ -13,7 +13,7 @@ import CheckBox from 'react-native-check-box';
 import {SignUpButton} from '../Componets/Button';
 import {NAVIGATION_NAME} from '../Appdata/NavigationName';
 
-export default function Login() {
+export default function Login({navigation}) {
   return (
     <ImageBackground
       source={require('../Assets/Images/bgimg.jpg')}
@@ -31,7 +31,8 @@ export default function Login() {
           <TextInput style={styles.myInput} placeholder="**********" />
         </View>
       </View>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation.navigate(NAVIGATION_NAME.OTP)}>
         <Text style={styles.alreayTxt}>Forget password ?</Text>
       </TouchableOpacity>
       <SignUpButton
