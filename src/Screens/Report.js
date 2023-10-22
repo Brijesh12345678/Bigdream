@@ -12,13 +12,14 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {Themes} from '../Appdata/colors';
 import {List, ListItem} from 'native-base';
 import {reportList} from '../Componets/AppData';
+import BottomNav from '../Componets/BottomNav';
 const FirstRoute = () => {
   return reportList?.map((val, index) => {
     return (
       <View style={{flex: 1}}>
         <List>
           <ListItem style={styles.listItemStyle}>
-            <Text>{val.name}</Text>
+            <Text style={{color: '#000'}}>{val.name}</Text>
             <AntDesign name="arrowright" />
           </ListItem>
         </List>
@@ -47,26 +48,29 @@ const Report = ({naviation}) => {
     {key: 'third', title: 'MUTUAL FUNDAS'},
   ]);
   return (
-    <View style={styles.container}>
-      {/* Header View  */}
-      <View style={styles.headerMainView}>
-        <View style={styles.headerSubView}>
-          <Entypo name="menu" color="black" style={styles.menuIcon} />
-          <Text style={styles.haderTitle}>REPORTS</Text>
+    <>
+      <View style={styles.container}>
+        {/* Header View  */}
+        <View style={styles.headerMainView}>
+          <View style={styles.headerSubView}>
+            <Entypo name="menu" color="black" style={styles.menuIcon} />
+            <Text style={styles.haderTitle}>REPORTS</Text>
+          </View>
+          <View style={styles.headerSubView}>
+            <AntDesign style={styles.bellIcon} name="bells" color="black" />
+            <Entypo style={styles.bellIcon} name="message" color="black" />
+          </View>
         </View>
-        <View style={styles.headerSubView}>
-          <AntDesign style={styles.bellIcon} name="bells" color="black" />
-          <Entypo style={styles.bellIcon} name="message" color="black" />
-        </View>
+        {/* Header View End */}
+        <TabView
+          navigationState={{index, routes}}
+          renderScene={renderScene}
+          onIndexChange={setIndex}
+          initialLayout={{width: layout.width}}
+        />
       </View>
-      {/* Header View End */}
-      <TabView
-        navigationState={{index, routes}}
-        renderScene={renderScene}
-        onIndexChange={setIndex}
-        initialLayout={{width: layout.width}}
-      />
-    </View>
+      <BottomNav />
+    </>
   );
 };
 

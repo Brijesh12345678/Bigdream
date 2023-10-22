@@ -8,6 +8,8 @@ import Menu from '../Screens/Menu';
 import OTP from '../Screens/Otp';
 import Report from '../Screens/Report';
 import PaperTrading from '../Screens/PaperTrading';
+import CoinDetails from '../Screens/CoinDetails';
+import Coin from '../Screens/Coin';
 export default function StackNavigation() {
   const {Screen, Navigator} = createNativeStackNavigator();
   return (
@@ -45,6 +47,16 @@ export default function StackNavigation() {
       <Screen
         name={NAVIGATION_NAME.PAPERTRADING}
         component={PaperTrading}
+        options={{headerShown: false}}
+      />
+      <Screen
+        name={NAVIGATION_NAME.COINDETAILS}
+        component={CoinDetails}
+        options={{headerShown: false}}
+      />
+      <Screen
+        name={NAVIGATION_NAME.COINS}
+        component={Coin}
         options={{headerShown: false}}
       />
     </Navigator>

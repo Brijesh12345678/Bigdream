@@ -44,3 +44,70 @@ export const reportList = [
     icon: require('../Assets/Images/arrow.png'),
   },
 ];
+
+export const BottomNavTxt = [
+  {
+    name: 'Watchlist',
+    img: require('../Assets/Images/star.png'),
+  },
+  {
+    name: 'Chart',
+    img: require('../Assets/Images/bar_Chart.png'),
+  },
+  {
+    name: 'Paper Trading',
+    img: require('../Assets/Images/newspaperTrading.png'),
+  },
+  {
+    name: 'Reports',
+    img: require('../Assets/Images/report.png'),
+  },
+  {
+    name: 'Menu',
+    img: require('../Assets/Images/menu.png'),
+  },
+];
+export const CoinDummyData = [
+  {
+    changLkLeft: '5.03 LK',
+    changLTPLeft: '294.10',
+    Stike: '19400.00',
+    changLkRight: '20.37 LK',
+    changLTPRight: '114.90',
+  },
+  {
+    changLkLeft: '5.03 LK',
+    changLTPLeft: '294.10',
+    Stike: '19400.00',
+    changLkRight: '20.37 LK',
+    changLTPRight: '114.90',
+  },
+  {
+    changLkLeft: '5.03 LK',
+    changLTPLeft: '294.10',
+    Stike: '19400.00',
+    changLkRight: '20.37 LK',
+    changLTPRight: '114.90',
+  },
+  {
+    changLkLeft: '5.03 LK',
+    changLTPLeft: '294.10',
+    Stike: '19400.00',
+    changLkRight: '20.37 LK',
+    changLTPRight: '114.90',
+  },
+  {
+    changLkLeft: '5.03 LK',
+    changLTPLeft: '294.10',
+    Stike: '19400.00',
+    changLkRight: '20.37 LK',
+    changLTPRight: '114.90',
+  },
+  {
+    changLkLeft: '5.03 LK',
+    changLTPLeft: '294.10',
+    Stike: '19400.00',
+    changLkRight: '20.37 LK',
+    changLTPRight: '114.90',
+  },
+];

@@ -2,6 +2,7 @@ import React from 'react';
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {Themes} from '../Appdata/colors';
 import {NAVIGATION_NAME} from '../Appdata/NavigationName';
+import BottomNav from '../Componets/BottomNav';
 
 const Menu = ({navigation}) => {
   return (
@@ -27,13 +28,15 @@ const Menu = ({navigation}) => {
             />
             {/* </View> */}
           </TouchableOpacity>
-          <View style={styles.settingNewsSubView}>
+          <TouchableOpacity
+            style={styles.settingNewsSubView}
+            onPress={() => navigation.navigate(NAVIGATION_NAME.COINDETAILS)}>
             <Text style={styles.settingNewstxt}>News</Text>
             <Image
               source={require('../Assets/Images/newspaper.png')}
               style={styles.settingImg}
             />
-          </View>
+          </TouchableOpacity>
         </View>
         {/* list start */}
         <View
@@ -50,9 +53,12 @@ const Menu = ({navigation}) => {
               source={require('../Assets/Images/credit_card.png')}
               style={styles.listIcon}
             />
-            <Text style={{fontSize: 20, marginLeft: 20, color: 'black'}}>
-              Subscription
-            </Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate(NAVIGATION_NAME.COINS)}>
+              <Text style={{fontSize: 20, marginLeft: 20, color: 'black'}}>
+                Subscription
+              </Text>
+            </TouchableOpacity>
           </View>
           <View>
             <Text style={{fontSize: 30, fontWeight: 'bold'}}>{'>'}</Text>
@@ -126,6 +132,7 @@ const Menu = ({navigation}) => {
         </View>
       </View>
       {/* Refer a friend End*/}
+      <BottomNav />
     </>
   );
 };

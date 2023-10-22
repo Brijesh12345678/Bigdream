@@ -6,4 +6,6 @@ export const NAVIGATION_NAME = {
   OTP: 'OTP',
   REPORT: 'Report',
   PAPERTRADING: 'PaperTrading',
+  COINDETAILS: 'CoinDetails',
+  COINS: 'Coin',
 };
