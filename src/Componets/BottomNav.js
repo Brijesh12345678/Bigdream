@@ -2,8 +2,24 @@ import React from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {Themes} from '../Appdata/colors';
 import {BottomNavTxt} from './AppData';
-
+import {useNavigation} from '@react-navigation/native';
+import {NAVIGATION_NAME} from '../Appdata/NavigationName';
 const BottomNav = () => {
+  const navigation = useNavigation();
+  const onPress = name => {
+    if (name === 'Watchlist') {
+      navigation.navigate(NAVIGATION_NAME.COINS);
+    } else if (name === 'Chart') {
+      navigation.navigate(NAVIGATION_NAME.COINS);
+    } else if (name === 'Paper Trading') {
+      navigation.navigate(NAVIGATION_NAME.PAPERTRADING);
+    } else if (name === 'Reports') {
+      navigation.navigate(NAVIGATION_NAME.REPORT);
+    } else if (name === 'Reports') {
+      navigation.navigate(NAVIGATION_NAME.MENU);
+    }
+  };
+
   return (
     <View style={style.container}>
       <View
@@ -16,7 +32,7 @@ const BottomNav = () => {
         {BottomNavTxt?.map((val, index) => {
           return (
             <>
-              <TouchableOpacity key={index}>
+              <TouchableOpacity onPress={() => onPress(val.name)} key={index}>
                 <Image
                   style={style.imgstyle}
                   source={val.img}

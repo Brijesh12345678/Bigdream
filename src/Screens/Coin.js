@@ -1,12 +1,14 @@
 import React from 'react';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {CoinDummyData} from '../Componets/AppData';
 import BottomNav from '../Componets/BottomNav';
 import {Themes} from '../Appdata/colors';
+import Feather from 'react-native-vector-icons/Feather';
+import {Container, Header, Left, Body, Right, Button, Title} from 'native-base';
 const Coin = () => {
   const renderItem = ({item}) => {
-    console.log(item, 'itemitemitem');
+    // console.log(item, 'itemitemitem');
     return (
       <View style={styles.listData}>
         <View>
@@ -18,7 +20,14 @@ const Coin = () => {
           <Text style={{color: Themes.AppTheme.red}}>-65.20</Text>
         </View>
 
-        <View>
+        <View
+          style={{
+            backgroundColor: Themes.AppTheme.grey,
+            width: 100,
+            height: 58,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
           <Text
             style={{
               ...styles.middleText,
@@ -44,7 +53,43 @@ const Coin = () => {
   return (
     <>
       <View style={{flex: 1}}>
-        {/* <Text>Coin</Text> */}
+        {/* Header View*/}
+        <View
+          style={{
+            flexDirection: 'row',
+            paddingHorizontal: 10,
+            height: 50,
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            borderBottomWidth: 2,
+            borderBottomColor: Themes.AppTheme.darkgrey,
+          }}>
+          <View
+            style={{
+              justifyContent: 'center',
+              flexDirection: 'row',
+              width: '70%',
+              alignItems: 'center',
+            }}>
+            <TouchableOpacity>
+              <Feather
+                name="arrow-left"
+                style={{fontSize: 25, color: '#000'}}
+              />
+            </TouchableOpacity>
+            <Body>
+              <Title style={{fontSize: 20, color: '#000'}}>OPTION CHAIN</Title>
+            </Body>
+          </View>
+          <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+            <Feather
+              name="bell"
+              style={{fontSize: 25, color: '#000', marginRight: 10}}
+            />
+            <Feather name="info" style={{fontSize: 25, color: '#000'}} />
+          </View>
+        </View>
+        {/* Header View End*/}
 
         {/* List View */}
         <View style={styles.listHeader}>
@@ -71,10 +116,10 @@ const Coin = () => {
             </Text>
           </View>
           <View>
-            <Text>LTP</Text>
+            <Text>Oi</Text>
             <Text>
               <FontAwesome name="rupee" style={styles.closeIcon} />
-              Change
+              (%Chng)
             </Text>
           </View>
         </View>
