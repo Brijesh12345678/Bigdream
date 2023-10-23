@@ -15,7 +15,7 @@ const BottomNav = () => {
       navigation.navigate(NAVIGATION_NAME.PAPERTRADING);
     } else if (name === 'Reports') {
       navigation.navigate(NAVIGATION_NAME.REPORT);
-    } else if (name === 'Reports') {
+    } else if (name === 'Menu') {
       navigation.navigate(NAVIGATION_NAME.MENU);
     }
   };

@@ -39,6 +39,7 @@ export default function Login({navigation}) {
         title={'SIGN IP'}
         style={styles.signUpButton}
         textstyle={styles.txtstyle}
+        onPress={() => navigation.navigate(NAVIGATION_NAME.MENU)}
       />
       <TouchableOpacity
         onPress={() => navigation.navigate(NAVIGATION_NAME.REGISTER)}>

@@ -21,7 +21,7 @@ export default function Welcome({navigation}) {
           disabled={false}
           style={styles.buttonstyle}
           textstyle={styles.txtstyle}
-          onPress={() => navigation.navigate(NAVIGATION_NAME.MENU)}
+          onPress={() => navigation.navigate(NAVIGATION_NAME.LOGIN)}
         />
         <Button
           onPress={() => navigation.navigate(NAVIGATION_NAME.REGISTER)}
