@@ -38,7 +38,7 @@ const BottomNav = () => {
                   source={val.img}
                   resizeMode="contain"
                 />
-                <Text>{val.name}</Text>
+                <Text style={{color: '#fff'}}>{val.name}</Text>
               </TouchableOpacity>
             </>
           );
