@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 import {
   View,
   ImageBackground,
@@ -7,13 +8,18 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
 import {Themes} from '../Appdata/colors';
-import CheckBox from 'react-native-check-box';
 import {SignUpButton} from '../Componets/Button';
 import {NAVIGATION_NAME} from '../Appdata/NavigationName';
 
 export default function Login({navigation}) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const submit = () => {
+    console.log(email, password);
+  };
+
   return (
     <ImageBackground
       source={require('../Assets/Images/bgimg.jpg')}
@@ -24,11 +30,20 @@ export default function Login({navigation}) {
       <View style={styles.formView}>
         <View style={styles.formSubView}>
           <Text style={styles.label}>Email:</Text>
-          <TextInput style={styles.myInput} placeholder="username@gmail.com" />
+          <TextInput
+            onChangeText={e => setEmail(e)}
+            style={styles.myInput}
+            placeholder="username@gmail.com"
+          />
         </View>
         <View style={styles.formSubView}>
           <Text style={styles.label}>Password:</Text>
-          <TextInput style={styles.myInput} placeholder="**********" />
+          <TextInput
+            secureTextEntry={true}
+            onChangeText={e => setPassword(e)}
+            style={styles.myInput}
+            placeholder="**********"
+          />
         </View>
       </View>
       <TouchableOpacity
@@ -36,10 +51,10 @@ export default function Login({navigation}) {
         <Text style={styles.alreayTxt}>Forget password ?</Text>
       </TouchableOpacity>
       <SignUpButton
-        title={'SIGN IP'}
+        title={'SIGN UP'}
         style={styles.signUpButton}
         textstyle={styles.txtstyle}
-        onPress={() => navigation.navigate(NAVIGATION_NAME.MENU)}
+        onPress={() => submit()}
       />
       <TouchableOpacity
         onPress={() => navigation.navigate(NAVIGATION_NAME.REGISTER)}>
@@ -120,3 +135,21 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 });
+
+// import {View} from 'native-base';
+// import React, {useState} from 'react';
+// import {Text, Button} from 'react-native';
+// const App = () => {
+//   let data = 100;
+//   const fruit = val => {
+//     data = 20;
+//     console.warn(data);
+//   };
+//   return (
+//     <View>
+//       <Text style={{fontSize: 20}}>{data} </Text>
+//       <Button title="On Press" onPress={() => fruit('Hello')} color={'green'} />
+//     </View>
+//   );
+// };
+// export default App;

@@ -6,55 +6,129 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {Themes} from '../Appdata/colors';
 import CheckBox from 'react-native-check-box';
 import {SignUpButton} from '../Componets/Button';
 import {NAVIGATION_NAME} from '../Appdata/NavigationName';
+import {useDispatch, useSelector} from 'react-redux';
+import {SignupRequest} from '../Redux/actions';
+import Loader from '../Componets/Loader';
 
 export default function Register({navigation}) {
+  const dispatch = useDispatch();
+  const {registerData, loading} = useSelector(state => state.app);
+  const [userData, setUserData] = useState({
+    email: '',
+    phone: '',
+    password: '',
+    confimPassword: '',
+  });
+
+  const submit = () => {
+    if (userData.email == '') {
+      alert('Please Enter your email');
+    } else if (userData.phone == '') {
+      alert('Please Enter your Phone Number');
+    } else if (userData.password == '') {
+      alert('Please Enter your password');
+    } else if (userData.confimPassword == '') {
+      alert('Please Enter Confirm Password');
+    } else if (userData.password != userData.confimPassword) {
+      alert('Confirm Password not Match with password');
+    } else {
+      let row = {
+        email: userData.email,
+        contact_number: userData.phone,
+        password: userData.password,
+      };
+      dispatch(SignupRequest(JSON.stringify(row)));
+    }
+    // console.log(userData);
+  };
+
+  React.useEffect(() => {
+    if (registerData?.statusCode == 201) {
+      navigation.navigate(NAVIGATION_NAME.LOGIN);
+      setUserData({
+        ...userData,
+        email: '',
+        confimPassword: '',
+        password: '',
+        phone: '',
+      });
+    }
+    console.log(registerData, 'registerDataregisterData123');
+  }, [registerData]);
+
   return (
-    <ImageBackground
-      source={require('../Assets/Images/bgimg.jpg')}
-      style={styles.container}>
-      <Image source={require('../Assets/Images/logo.png')} style={styles.img} />
-      <Text style={styles.title}>register</Text>
-      <Text style={styles.subtitle}>You and Your Friends always Connected</Text>
-      <View style={styles.formView}>
-        <View style={styles.formSubView}>
-          <Text style={styles.label}>Email:</Text>
-          <TextInput style={styles.myInput} placeholder="username@gmail.com" />
-        </View>
-        <View style={styles.formSubView}>
-          <Text style={styles.label}>Contact Number:</Text>
-          <TextInput style={styles.myInput} placeholder="**********" />
-        </View>
-        <View style={styles.formSubView}>
-          <Text style={styles.label}>Password:</Text>
-          <TextInput style={styles.myInput} placeholder="**********" />
-        </View>
-        <View style={styles.formSubView}>
-          <Text style={styles.label}>Confime Password:</Text>
-          <TextInput style={styles.myInput} placeholder="**********" />
-        </View>
-      </View>
-      <View style={styles.tramsView}>
-        <CheckBox />
-        <Text style={styles.tramsxtx}>
-          I agree with the treams and condition and the privcy policy
+    <ScrollView>
+      <Loader check={loading} />
+      <ImageBackground
+        source={require('../Assets/Images/bgimg.jpg')}
+        style={styles.container}>
+        <Image
+          source={require('../Assets/Images/logo.png')}
+          style={styles.img}
+        />
+        <Text style={styles.title}>register</Text>
+        <Text style={styles.subtitle}>
+          You and Your Friends always Connected
         </Text>
-      </View>
-      <SignUpButton
-        title={'SIGN UP'}
-        style={styles.signUpButton}
-        textstyle={styles.txtstyle}
-      />
-      <TouchableOpacity
-        onPress={() => navigation.navigate(NAVIGATION_NAME.LOGIN)}>
-        <Text style={styles.alreayTxt}>Already have an account? Login</Text>
-      </TouchableOpacity>
-    </ImageBackground>
+        <View style={styles.formView}>
+          <View style={styles.formSubView}>
+            <Text style={styles.label}>Email:</Text>
+            <TextInput
+              onChangeText={e => setUserData({...userData, email: e})}
+              style={styles.myInput}
+              placeholder="username@gmail.com"
+            />
+          </View>
+          <View style={styles.formSubView}>
+            <Text style={styles.label}>Contact Number:</Text>
+            <TextInput
+              style={styles.myInput}
+              placeholder="**********"
+              onChangeText={e => setUserData({...userData, phone: e})}
+            />
+          </View>
+          <View style={styles.formSubView}>
+            <Text style={styles.label}>Password:</Text>
+            <TextInput
+              style={styles.myInput}
+              placeholder="**********"
+              onChangeText={e => setUserData({...userData, password: e})}
+            />
+          </View>
+          <View style={styles.formSubView}>
+            <Text style={styles.label}>Confime Password:</Text>
+            <TextInput
+              style={styles.myInput}
+              placeholder="**********"
+              onChangeText={e => setUserData({...userData, confimPassword: e})}
+            />
+          </View>
+        </View>
+        <View style={styles.tramsView}>
+          <CheckBox />
+          <Text style={styles.tramsxtx}>
+            I agree with the treams and condition and the privcy policy
+          </Text>
+        </View>
+        <SignUpButton
+          title={'SIGN UP'}
+          style={styles.signUpButton}
+          textstyle={styles.txtstyle}
+          onPress={() => submit()}
+        />
+        <TouchableOpacity
+          onPress={() => navigation.navigate(NAVIGATION_NAME.LOGIN)}>
+          <Text style={styles.alreayTxt}>Already have an account? Login</Text>
+        </TouchableOpacity>
+      </ImageBackground>
+    </ScrollView>
   );
 }
 const styles = StyleSheet.create({

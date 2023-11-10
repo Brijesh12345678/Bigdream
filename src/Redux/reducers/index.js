@@ -15,11 +15,9 @@ import {
   SENT_OTP_STARTED,
   SENT_OTP_SUCCESS,
   SENT_OTP_FAILURE,
-
   SEARCH_BARCODE_STARTED,
   SEARCH_BARCODE_SUCCESS,
   SEARCH_BARCODE_FAILURE,
-
 } from '../constats/actionType';
 
 import Immutable from 'seamless-immutable';
@@ -30,17 +28,13 @@ export const initialState = Immutable.from({
   isConnected: false,
   loading: false,
   app: {
-    loginLoading: false,
-    registrationLoading: false,
-    forgetpassLoading: false,
-    changePasswordLoading: false,
-    otpLoading: false,
+    loading: false,
     loginData: null,
     registerData: null,
     forgetpassData: null,
     ChangePasswordData: null,
     OTPRequestData: null,
-    SearchBarcodeData:null
+    SearchBarcodeData: null,
   },
 });
 
@@ -53,21 +47,21 @@ export const onLoginStarted = state =>
   state.merge({
     app: state.app.merge({
       loginData: initialState.app.loginData,
-      loginLoading: true,
+      loading: true,
     }),
   });
 export const onLoginSuccess = (state, response) =>
   state.merge({
     app: state.app.merge({
       loginData: response,
-      loginLoading: false,
+      loading: false,
     }),
   });
 export const onLoginFailure = state =>
   state.merge({
     app: state.app.merge({
       loginData: initialState.app.loginData,
-      loginLoading: false,
+      loading: false,
     }),
   });
 
@@ -78,21 +72,21 @@ export const onRegisterStarted = state =>
   state.merge({
     app: state.app.merge({
       registerData: initialState.app.registerData,
-      loginLoading: true,
+      loading: true,
     }),
   });
 export const onRegisterSuccess = (state, response) =>
   state.merge({
     app: state.app.merge({
-      registerData: response,
-      loginLoading: false,
+      registerData: response?.response,
+      loading: false,
     }),
   });
 export const onRegisterFailure = state =>
   state.merge({
     app: state.app.merge({
       registerData: initialState.app.registerData,
-      loginLoading: false,
+      loading: false,
     }),
   });
 
@@ -103,21 +97,21 @@ export const onForgetPasswordMailStarted = state =>
   state.merge({
     app: state.app.merge({
       forgetpassData: initialState.app.forgetpassData,
-      forgetpassLoading: true,
+      loading: true,
     }),
   });
 export const onForgetPasswordMailSuccess = (state, response) =>
   state.merge({
     app: state.app.merge({
       forgetpassData: response,
-      forgetpassLoading: false,
+      loading: false,
     }),
   });
 export const onForgetPasswordMailFailure = state =>
   state.merge({
     app: state.app.merge({
       forgetpassData: initialState.app.forgetpassData,
-      forgetpassLoading: false,
+      loading: false,
     }),
   });
 
@@ -126,21 +120,21 @@ export const onChangePasswordStarted = state =>
   state.merge({
     app: state.app.merge({
       ChangePasswordData: initialState.app.ChangePasswordData,
-      changePasswordLoading: true,
+      loading: true,
     }),
   });
 export const onChangePasswordSuccess = (state, response) =>
   state.merge({
     app: state.app.merge({
       ChangePasswordData: response,
-      changePasswordLoading: false,
+      loading: false,
     }),
   });
 export const onChangePasswordFailure = state =>
   state.merge({
     app: state.app.merge({
       ChangePasswordData: initialState.app.ChangePasswordData,
-      changePasswordLoading: false,
+      loading: false,
     }),
   });
 
@@ -149,50 +143,47 @@ export const onOTPSentStarted = state =>
   state.merge({
     app: state.app.merge({
       OTPRequestData: initialState.app.OTPRequestData,
-      otpLoading: true,
+      loading: true,
     }),
   });
 export const onOTPSentSuccess = (state, response) =>
   state.merge({
     app: state.app.merge({
       OTPRequestData: response,
-      otpLoading: false,
+      loading: false,
     }),
   });
 export const onOTPSentFailure = state =>
   state.merge({
     app: state.app.merge({
       OTPRequestData: initialState.app.OTPRequestData,
-      otpLoading: false,
+      loading: false,
     }),
   });
 
-// SEARCH BARCODE 
-
+// SEARCH BARCODE
 
 export const onSearchBarcodeStarted = state =>
   state.merge({
     app: state.app.merge({
       SearchBarcodeData: initialState.app.SearchBarcodeData,
-      loginLoading: true,
+      loading: true,
     }),
   });
 export const onSearchBarcodeSuccess = (state, response) =>
   state.merge({
     app: state.app.merge({
       SearchBarcodeData: response,
-      loginLoading: false,
+      loading: false,
     }),
   });
 export const onSearchBarcodeFailure = state =>
   state.merge({
     app: state.app.merge({
       SearchBarcodeData: initialState.app.SearchBarcodeData,
-      loginLoading: false,
+      loading: false,
     }),
   });
-
-
 
 const appReducer = createReducer(initialState, {
   [SET_CONNECTION_STATUS]: onSetConnectionStatus,
