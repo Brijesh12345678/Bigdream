@@ -1,10 +1,22 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {Themes} from '../Appdata/colors';
 import {NAVIGATION_NAME} from '../Appdata/NavigationName';
 import BottomNav from '../Componets/BottomNav';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {USERDATA} from '../Utility/AsyncStorage';
 const Menu = ({navigation}) => {
+  const [userdatas, setUserData] = useState(null);
+  const getLocalData = async () => {
+    let userData = await AsyncStorage.getItem(USERDATA);
+    setUserData(JSON.parse(userData)?.user);
+  };
+
+  console.log(userdatas, 'userDatauserData');
+  useEffect(() => {
+    getLocalData();
+  }, []);
+
   return (
     <>
       <View style={styles.container}>
@@ -12,8 +24,10 @@ const Menu = ({navigation}) => {
         <TouchableOpacity
           onPress={() => navigation.navigate(NAVIGATION_NAME.REPORT)}>
           <View style={styles.userNameView}>
-            <Text style={styles.mainTxt}>Z</Text>
-            <Text style={styles.usernametxt}>Zakirmohd547</Text>
+            <Text style={styles.mainTxt}>
+              {userdatas.email.substring(0, 1)}
+            </Text>
+            <Text style={styles.usernametxt}>{userdatas.email}</Text>
           </View>
         </TouchableOpacity>
         <View style={styles.settingNewsView}>
@@ -174,7 +188,7 @@ const styles = StyleSheet.create({
   usernametxt: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: Themes.AppTheme.lightblack,
+    color: Themes.AppTheme.black,
   },
   settingImg: {
     width: 50,

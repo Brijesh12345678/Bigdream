@@ -11,48 +11,51 @@ import {
 import {Themes} from '../Appdata/colors';
 import {SignUpButton} from '../Componets/Button';
 import {NAVIGATION_NAME} from '../Appdata/NavigationName';
-import {loginRequest} from '../Redux/actions';
+import {ChangePasswordRequest} from '../Redux/actions';
 import {useDispatch, useSelector} from 'react-redux';
 import Loader from '../Componets/Loader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TOKEN, USERDATA} from '../Utility/AsyncStorage';
-export default function Login({navigation}) {
-  const {loginData, loading} = useSelector(state => state.app);
+export default function ResetPassword({navigation}) {
+  const {ChangePasswordData, loading} = useSelector(state => state.app);
   const dispatch = useDispatch();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [data, setData] = useState({
+    password: null,
+    confirmPassword: null,
+  });
 
   const submit = () => {
-    if (email === '') {
-      alert('Please Enter Your Email');
-    } else if (password === '') {
-      alert('Please Enter Your Password');
+    if (data.password === '') {
+      alert('Please Enter Your password');
+    } else if (data.confirmPassword === '') {
+      alert('Please Enter Your Confirm Password');
+    } else if (data.password != data.confirmPassword) {
+      alert('Please Enter Corrct Confirm Password');
     } else {
       let row = {
-        email: email,
-        password: password,
+        resetToken: ChangePasswordData?.response?.data?.data?.user?.resetToken,
+        newPassword: data.password,
       };
-      dispatch(loginRequest(JSON.stringify(row)));
+      dispatch(ChangePasswordRequest(JSON.stringify(row)));
     }
   };
   const isSuccess = async () => {
-    if (loginData?.response) {
-      if (loginData?.response.statusCode == 200) {
+    if (ChangePasswordData?.response) {
+      if (ChangePasswordData?.response.statusCode == 200) {
         alert('Success');
-        navigation.navigate(NAVIGATION_NAME.MENU);
-        AsyncStorage.setItem(USERDATA, JSON.stringify(loginData.response.data));
-        AsyncStorage.setItem(
-          TOKEN,
-          JSON.stringify(loginData.response.data.token),
-        );
+        navigation.navigate(NAVIGATION_NAME.LOGIN);
       } else {
-        alert(loginData?.response?.data?.error);
+        alert('Error');
       }
     }
   };
+  console.log(
+    ChangePasswordData?.response?.data?.data?.user?.resetToken,
+    'ChangePasswordDataChangePasswordData',
+  );
   useEffect(() => {
     isSuccess();
-  }, [loginData]);
+  }, [ChangePasswordData]);
   return (
     <>
       <Loader check={loading} />
@@ -63,45 +66,34 @@ export default function Login({navigation}) {
           source={require('../Assets/Images/logo.png')}
           style={styles.img}
         />
-        <Text style={styles.title}>Login in!</Text>
+        <Text style={styles.title}>Reset Password</Text>
         <Text style={styles.subtitle}>Happy to see you again!</Text>
         <View style={styles.formView}>
           <View style={styles.formSubView}>
-            <Text style={styles.label}>Email:</Text>
+            <Text style={styles.label}>Password:</Text>
             <TextInput
-              onChangeText={e => setEmail(e)}
+              onChangeText={e => setData({...data, password: e})}
               style={styles.myInput}
-              placeholder="username@gmail.com"
+              placeholder="Password"
               placeholderTextColor={Themes.AppTheme.black}
             />
           </View>
           <View style={styles.formSubView}>
-            <Text style={styles.label}>Password:</Text>
+            <Text style={styles.label}>Confirm Password:</Text>
             <TextInput
-              secureTextEntry={true}
-              onChangeText={e => setPassword(e)}
+              onChangeText={e => setData({...data, confirmPassword: e})}
               style={styles.myInput}
-              placeholder="**********"
+              placeholder="Confirm Password"
               placeholderTextColor={Themes.AppTheme.black}
             />
           </View>
         </View>
-        <TouchableOpacity
-          onPress={() => navigation.navigate(NAVIGATION_NAME.FORGOTPASSWORD)}>
-          <Text style={styles.alreayTxt}>Forget password ?</Text>
-        </TouchableOpacity>
         <SignUpButton
-          title={'SIGN UP'}
+          title={'SUBMIT'}
           style={styles.signUpButton}
           textstyle={styles.txtstyle}
           onPress={() => submit()}
         />
-        <TouchableOpacity
-          onPress={() => navigation.navigate(NAVIGATION_NAME.REGISTER)}>
-          <Text style={styles.alreayTxt}>
-            Don't have an account? Sign up here
-          </Text>
-        </TouchableOpacity>
       </ImageBackground>
     </>
   );
@@ -120,7 +112,7 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: 'center',
-    fontSize: 50,
+    fontSize: 30,
     textTransform: 'uppercase',
     fontWeight: 'bold',
     color: Themes.AppTheme.button,

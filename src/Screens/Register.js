@@ -26,7 +26,7 @@ export default function Register({navigation}) {
     password: '',
     confimPassword: '',
   });
-
+  const [isSelected, setSelection] = useState(false);
   const submit = () => {
     if (userData.email == '') {
       alert('Please Enter your email');
@@ -84,6 +84,7 @@ export default function Register({navigation}) {
               onChangeText={e => setUserData({...userData, email: e})}
               style={styles.myInput}
               placeholder="username@gmail.com"
+              placeholderTextColor={Themes.AppTheme.black}
             />
           </View>
           <View style={styles.formSubView}>
@@ -92,6 +93,7 @@ export default function Register({navigation}) {
               style={styles.myInput}
               placeholder="**********"
               onChangeText={e => setUserData({...userData, phone: e})}
+              placeholderTextColor={Themes.AppTheme.black}
             />
           </View>
           <View style={styles.formSubView}>
@@ -100,6 +102,7 @@ export default function Register({navigation}) {
               style={styles.myInput}
               placeholder="**********"
               onChangeText={e => setUserData({...userData, password: e})}
+              placeholderTextColor={Themes.AppTheme.black}
             />
           </View>
           <View style={styles.formSubView}>
@@ -108,11 +111,16 @@ export default function Register({navigation}) {
               style={styles.myInput}
               placeholder="**********"
               onChangeText={e => setUserData({...userData, confimPassword: e})}
+              placeholderTextColor={Themes.AppTheme.black}
             />
           </View>
         </View>
         <View style={styles.tramsView}>
-          <CheckBox />
+          <CheckBox
+            style={{flex: 1, padding: 10}}
+            onClick={() => setSelection(!isSelected)}
+            isChecked={isSelected}
+          />
           <Text style={styles.tramsxtx}>
             I agree with the treams and condition and the privcy policy
           </Text>
@@ -154,6 +162,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 15,
     fontWeight: '600',
+    color: Themes.AppTheme.black,
   },
   formView: {
     alignSelf: 'center',
@@ -167,6 +176,7 @@ const styles = StyleSheet.create({
   myInput: {
     borderBottomWidth: 1,
     borderBottomColor: 'grey',
+    color: Themes.AppTheme.black,
   },
   formSubView: {
     marginBottom: 10,
@@ -180,6 +190,7 @@ const styles = StyleSheet.create({
   tramsxtx: {
     width: 200,
     marginLeft: '5%',
+    color: Themes.AppTheme.black,
   },
   signUpButton: {
     backgroundColor: 'red',

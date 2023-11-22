@@ -8,4 +8,6 @@ export const NAVIGATION_NAME = {
   PAPERTRADING: 'PaperTrading',
   COINDETAILS: 'CoinDetails',
   COINS: 'Coin',
+  FORGOTPASSWORD: 'ForgotPassword',
+  RESETPASSWORD: 'ResetPassword',
 };

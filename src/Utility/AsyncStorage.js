@@ -12,6 +12,7 @@ export const CUSTOMERID = 'CUSTOMERID';
 export const USERID = 'USERID';
 export const PASSWORD = 'PASSWORD';
 export const USERNAME = 'USERNAME';
+export const USERDATA = 'USERDATA';
 // Method for set the item on storage
 export const setItem = async (key, value) => {
   try {

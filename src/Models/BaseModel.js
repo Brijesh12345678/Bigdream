@@ -16,8 +16,8 @@ export default class BaseModel {
     return callApi('POST', apiUrl.ForgetPassURL, requestBody);
   }
 
-  static ChangePassword(requestBody) {
-    return callApi('PUT', apiUrl.ChangePassURL, requestBody);
+  static ResetPassword(requestBody) {
+    return callApi('POST', apiUrl.ResetPasswordURL, requestBody);
   }
 
   static OtpSend(requestBody) {

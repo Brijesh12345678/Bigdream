@@ -23,12 +23,9 @@ import {
   ChangePasswordStarted,
   ChangePasswordSuccess,
   ChangePasswordFailure,
-
   SearchBarcodeStarted,
   SearchBarcodeSuccess,
   SearchBarcodeFailure,
-
-
 } from '../actions';
 import BaseModel from '../../Models/BaseModel';
 import {showMessage} from '../../Utility/Utility';
@@ -67,7 +64,6 @@ function isValidPostResponseWithoutAlert(responseObj) {
 
 // Saga method for LOGIN request///////////////////////////////
 export function* onLoginRequest(action) {
-  console.log('check saga', action);
   try {
     yield put(loginStarted());
     const responseObj = yield BaseModel.login(action.requestBody);
@@ -124,7 +120,7 @@ export function* onchangepassword(action) {
   console.log('action>>>>>>>>', action);
   try {
     yield put(ChangePasswordStarted());
-    const responseObj = yield BaseModel.ChangePassword(action.requestBody);
+    const responseObj = yield BaseModel.ResetPassword(action.requestBody);
     if (isValidPostResponseWithoutAlert(responseObj, false)) {
       yield put(ChangePasswordSuccess(responseObj));
     } else {
@@ -154,10 +150,7 @@ export function* onOtpSend(action) {
   }
 }
 
-
-// Search Barcode 
-
-
+// Search Barcode
 
 export function* onSearchBarcode(action) {
   console.log('action>>>>>>>>', action);
@@ -174,7 +167,6 @@ export function* onSearchBarcode(action) {
     yield put(SearchBarcodeFailure());
   }
 }
-
 
 export function* actionWatcher() {
   yield takeLatest(LOGIN_REQUEST, onLoginRequest);

@@ -13,6 +13,8 @@ export async function callApi(methodType, apiUrl, requestBody, isDelete) {
     headers: {
       Accept: '*/*',
       'Content-Type': 'application/json',
+      Cookie:
+        'token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTUyMWM3NWRkYzE4NDAxZWMyMzNmYmMiLCJpYXQiOjE2OTk4ODAxNjEsImV4cCI6MTY5OTk2NjU2MX0.ZaBZlVcc4HH6idoNGE4etUiI3susY49lCBJJS8n7JLQ',
     },
   };
   try {

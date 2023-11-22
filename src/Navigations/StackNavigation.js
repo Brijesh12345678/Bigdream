@@ -10,6 +10,10 @@ import Report from '../Screens/Report';
 import PaperTrading from '../Screens/PaperTrading';
 import CoinDetails from '../Screens/CoinDetails';
 import Coin from '../Screens/Coin';
+import ForgotPassword from '../Screens/ForgotPassword';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import ResetPassword from '../Screens/ResetPassword';
+
 export default function StackNavigation() {
   const {Screen, Navigator} = createNativeStackNavigator();
   return (
@@ -57,6 +61,16 @@ export default function StackNavigation() {
       <Screen
         name={NAVIGATION_NAME.COINS}
         component={Coin}
+        options={{headerShown: false}}
+      />
+      <Screen
+        name={NAVIGATION_NAME.FORGOTPASSWORD}
+        component={ForgotPassword}
+        options={{headerShown: false}}
+      />
+      <Screen
+        name={NAVIGATION_NAME.RESETPASSWORD}
+        component={ResetPassword}
         options={{headerShown: false}}
       />
     </Navigator>

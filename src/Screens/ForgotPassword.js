@@ -11,48 +11,39 @@ import {
 import {Themes} from '../Appdata/colors';
 import {SignUpButton} from '../Componets/Button';
 import {NAVIGATION_NAME} from '../Appdata/NavigationName';
-import {loginRequest} from '../Redux/actions';
+import {forgetPassRequest, loginRequest} from '../Redux/actions';
 import {useDispatch, useSelector} from 'react-redux';
 import Loader from '../Componets/Loader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TOKEN, USERDATA} from '../Utility/AsyncStorage';
-export default function Login({navigation}) {
-  const {loginData, loading} = useSelector(state => state.app);
+export default function ForgotPassword({navigation}) {
+  const {forgetpassData, loading} = useSelector(state => state.app);
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
   const submit = () => {
     if (email === '') {
       alert('Please Enter Your Email');
-    } else if (password === '') {
-      alert('Please Enter Your Password');
     } else {
       let row = {
         email: email,
-        password: password,
       };
-      dispatch(loginRequest(JSON.stringify(row)));
+      dispatch(forgetPassRequest(JSON.stringify(row)));
     }
   };
   const isSuccess = async () => {
-    if (loginData?.response) {
-      if (loginData?.response.statusCode == 200) {
+    if (forgetpassData?.response) {
+      if (forgetpassData?.response.statusCode == 200) {
         alert('Success');
-        navigation.navigate(NAVIGATION_NAME.MENU);
-        AsyncStorage.setItem(USERDATA, JSON.stringify(loginData.response.data));
-        AsyncStorage.setItem(
-          TOKEN,
-          JSON.stringify(loginData.response.data.token),
-        );
+        navigation.navigate(NAVIGATION_NAME.RESETPASSWORD);
       } else {
-        alert(loginData?.response?.data?.error);
+        alert('Error');
       }
     }
   };
   useEffect(() => {
     isSuccess();
-  }, [loginData]);
+  }, [forgetpassData]);
   return (
     <>
       <Loader check={loading} />
@@ -63,7 +54,7 @@ export default function Login({navigation}) {
           source={require('../Assets/Images/logo.png')}
           style={styles.img}
         />
-        <Text style={styles.title}>Login in!</Text>
+        <Text style={styles.title}>Forgot Password</Text>
         <Text style={styles.subtitle}>Happy to see you again!</Text>
         <View style={styles.formView}>
           <View style={styles.formSubView}>
@@ -75,33 +66,13 @@ export default function Login({navigation}) {
               placeholderTextColor={Themes.AppTheme.black}
             />
           </View>
-          <View style={styles.formSubView}>
-            <Text style={styles.label}>Password:</Text>
-            <TextInput
-              secureTextEntry={true}
-              onChangeText={e => setPassword(e)}
-              style={styles.myInput}
-              placeholder="**********"
-              placeholderTextColor={Themes.AppTheme.black}
-            />
-          </View>
         </View>
-        <TouchableOpacity
-          onPress={() => navigation.navigate(NAVIGATION_NAME.FORGOTPASSWORD)}>
-          <Text style={styles.alreayTxt}>Forget password ?</Text>
-        </TouchableOpacity>
         <SignUpButton
-          title={'SIGN UP'}
+          title={'SUBMIT'}
           style={styles.signUpButton}
           textstyle={styles.txtstyle}
           onPress={() => submit()}
         />
-        <TouchableOpacity
-          onPress={() => navigation.navigate(NAVIGATION_NAME.REGISTER)}>
-          <Text style={styles.alreayTxt}>
-            Don't have an account? Sign up here
-          </Text>
-        </TouchableOpacity>
       </ImageBackground>
     </>
   );
@@ -120,7 +91,7 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: 'center',
-    fontSize: 50,
+    fontSize: 30,
     textTransform: 'uppercase',
     fontWeight: 'bold',
     color: Themes.AppTheme.button,
