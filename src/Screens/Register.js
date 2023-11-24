@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  ToastAndroid,
 } from 'react-native';
 import React, {useState} from 'react';
 import {Themes} from '../Appdata/colors';
@@ -14,8 +15,9 @@ import CheckBox from 'react-native-check-box';
 import {SignUpButton} from '../Componets/Button';
 import {NAVIGATION_NAME} from '../Appdata/NavigationName';
 import {useDispatch, useSelector} from 'react-redux';
-import {SignupRequest} from '../Redux/actions';
+import {SignupRequest, SignupFailure} from '../Redux/actions';
 import Loader from '../Componets/Loader';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 export default function Register({navigation}) {
   const dispatch = useDispatch();
@@ -25,6 +27,8 @@ export default function Register({navigation}) {
     phone: '',
     password: '',
     confimPassword: '',
+    showPassword: false,
+    showconfirmPassword: false,
   });
   const [isSelected, setSelection] = useState(false);
   const submit = () => {
@@ -51,6 +55,11 @@ export default function Register({navigation}) {
 
   React.useEffect(() => {
     if (registerData?.statusCode == 201) {
+      ToastAndroid.showWithGravity(
+        'You have successfully register',
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER,
+      );
       navigation.navigate(NAVIGATION_NAME.LOGIN);
       setUserData({
         ...userData,
@@ -60,8 +69,9 @@ export default function Register({navigation}) {
         phone: '',
       });
     }
+    dispatch(SignupFailure());
     console.log(registerData, 'registerDataregisterData123');
-  }, [registerData]);
+  }, []);
 
   return (
     <ScrollView>
@@ -91,23 +101,42 @@ export default function Register({navigation}) {
             <Text style={styles.label}>Contact Number:</Text>
             <TextInput
               style={styles.myInput}
-              placeholder="**********"
+              placeholder="Please Enter Your Mobile Number"
               onChangeText={e => setUserData({...userData, phone: e})}
               placeholderTextColor={Themes.AppTheme.black}
+              keyboardType="number-pad"
+              maxLength={10}
             />
           </View>
           <View style={styles.formSubView}>
             <Text style={styles.label}>Password:</Text>
-            <TextInput
-              style={styles.myInput}
-              placeholder="**********"
-              onChangeText={e => setUserData({...userData, password: e})}
-              placeholderTextColor={Themes.AppTheme.black}
-            />
+            <View>
+              <TextInput
+                secureTextEntry
+                style={styles.myInput}
+                placeholder="**********"
+                onChangeText={e => setUserData({...userData, password: e})}
+                placeholderTextColor={Themes.AppTheme.black}
+              />
+              {/* <TouchableOpacity
+                style={styles.eyeiconButton}
+                onPress={() =>
+                  setUserData({
+                    ...userData,
+                    showPassword: !userData.showPassword,
+                  })
+                }>
+                <Entypo
+                  name={userData.showPassword ? 'eye' : 'eye-with-line'}
+                  style={styles.eyeIcon}
+                />
+              </TouchableOpacity> */}
+            </View>
           </View>
           <View style={styles.formSubView}>
             <Text style={styles.label}>Confime Password:</Text>
             <TextInput
+              secureTextEntry
               style={styles.myInput}
               placeholder="**********"
               onChangeText={e => setUserData({...userData, confimPassword: e})}
@@ -122,7 +151,7 @@ export default function Register({navigation}) {
             isChecked={isSelected}
           />
           <Text style={styles.tramsxtx}>
-            I agree with the treams and condition and the privcy policy
+            I agree with the Terms and condition and the privcy policy
           </Text>
         </View>
         <SignUpButton

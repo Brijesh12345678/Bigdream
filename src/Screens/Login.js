@@ -11,17 +11,19 @@ import {
 import {Themes} from '../Appdata/colors';
 import {SignUpButton} from '../Componets/Button';
 import {NAVIGATION_NAME} from '../Appdata/NavigationName';
-import {loginRequest} from '../Redux/actions';
+import {loginFailure, loginRequest} from '../Redux/actions';
 import {useDispatch, useSelector} from 'react-redux';
 import Loader from '../Componets/Loader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TOKEN, USERDATA} from '../Utility/AsyncStorage';
+import Entypo from 'react-native-vector-icons/Entypo';
+import {ToastAndroid} from 'react-native-windows';
 export default function Login({navigation}) {
   const {loginData, loading} = useSelector(state => state.app);
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const [showPassword, setShowPassword] = useState(false);
   const submit = () => {
     if (email === '') {
       alert('Please Enter Your Email');
@@ -38,20 +40,26 @@ export default function Login({navigation}) {
   const isSuccess = async () => {
     if (loginData?.response) {
       if (loginData?.response.statusCode == 200) {
-        alert('Success');
+        ToastAndroid.showWithGravity(
+          'You have login successfully',
+          ToastAndroid.SHORT,
+          ToastAndroid.CENTER,
+        );
         navigation.navigate(NAVIGATION_NAME.MENU);
         AsyncStorage.setItem(USERDATA, JSON.stringify(loginData.response.data));
         AsyncStorage.setItem(
           TOKEN,
           JSON.stringify(loginData.response.data.token),
         );
+        dispatch(loginFailure());
       } else {
-        alert(loginData?.response?.data?.error);
+        alert('Somthing went wrong');
       }
     }
   };
   useEffect(() => {
     isSuccess();
+    dispatch(loginFailure());
   }, [loginData]);
   return (
     <>
@@ -77,13 +85,28 @@ export default function Login({navigation}) {
           </View>
           <View style={styles.formSubView}>
             <Text style={styles.label}>Password:</Text>
-            <TextInput
-              secureTextEntry={true}
-              onChangeText={e => setPassword(e)}
-              style={styles.myInput}
-              placeholder="**********"
-              placeholderTextColor={Themes.AppTheme.black}
-            />
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                width: '100%',
+              }}>
+              <TextInput
+                secureTextEntry={!showPassword}
+                onChangeText={e => setPassword(e)}
+                style={{...styles.myInput, width: '100%'}}
+                placeholder="**********"
+                placeholderTextColor={Themes.AppTheme.black}
+              />
+              <TouchableOpacity
+                style={styles.eyeiconButton}
+                onPress={() => setShowPassword(!showPassword)}>
+                <Entypo
+                  name={showPassword ? 'eye' : 'eye-with-line'}
+                  style={styles.eyeIcon}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
         <TouchableOpacity
@@ -91,7 +114,7 @@ export default function Login({navigation}) {
           <Text style={styles.alreayTxt}>Forget password ?</Text>
         </TouchableOpacity>
         <SignUpButton
-          title={'SIGN UP'}
+          title={'SIGN IN'}
           style={styles.signUpButton}
           textstyle={styles.txtstyle}
           onPress={() => submit()}
@@ -176,6 +199,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
     marginTop: 10,
+  },
+  eyeIcon: {
+    color: Themes.AppTheme.black,
+    fontSize: 18,
+  },
+  eyeiconButton: {
+    position: 'absolute',
+    right: 10,
   },
 });
 

@@ -8,7 +8,7 @@ const App = () => {
   }
   return (
     <View>
-      <Text style={{fontSize: 20, textAlign: 'center'}}>{name}</Text>
+      <Text style={{fontSize: 30, textAlign: 'center'}}>{name}</Text>
       <Button title="Update Name" onPress={testName} />
     </View>
   );

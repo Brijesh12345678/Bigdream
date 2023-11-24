@@ -7,6 +7,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  ToastAndroid,
 } from 'react-native';
 import {Themes} from '../Appdata/colors';
 import {SignUpButton} from '../Componets/Button';
@@ -34,10 +35,24 @@ export default function ForgotPassword({navigation}) {
   const isSuccess = async () => {
     if (forgetpassData?.response) {
       if (forgetpassData?.response.statusCode == 200) {
-        alert('Success');
-        navigation.navigate(NAVIGATION_NAME.RESETPASSWORD);
+        ToastAndroid.showWithGravity(
+          'You Have Successfully forgot password',
+          ToastAndroid.SHORT,
+          ToastAndroid.CENTER,
+        );
+        console.log(
+          forgetpassData?.response?.data?.data?.user?.resetToken,
+          'forgetpassData?.response',
+        );
+        navigation.navigate(NAVIGATION_NAME.RESETPASSWORD, {
+          token: forgetpassData?.response?.data?.data?.user?.resetToken,
+        });
       } else {
-        alert('Error');
+        ToastAndroid.showWithGravity(
+          forgetpassData?.response?.data?.message,
+          ToastAndroid.SHORT,
+          ToastAndroid.CENTER,
+        );
       }
     }
   };

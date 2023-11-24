@@ -7,6 +7,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  ToastAndroid,
 } from 'react-native';
 import {Themes} from '../Appdata/colors';
 import {SignUpButton} from '../Componets/Button';
@@ -16,14 +17,14 @@ import {useDispatch, useSelector} from 'react-redux';
 import Loader from '../Componets/Loader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TOKEN, USERDATA} from '../Utility/AsyncStorage';
-export default function ResetPassword({navigation}) {
+export default function ResetPassword({navigation, route}) {
   const {ChangePasswordData, loading} = useSelector(state => state.app);
   const dispatch = useDispatch();
   const [data, setData] = useState({
     password: null,
     confirmPassword: null,
   });
-
+  console.log(route?.params?.token, 'dfasdfsdfasdf');
   const submit = () => {
     if (data.password === '') {
       alert('Please Enter Your password');
@@ -33,7 +34,7 @@ export default function ResetPassword({navigation}) {
       alert('Please Enter Corrct Confirm Password');
     } else {
       let row = {
-        resetToken: ChangePasswordData?.response?.data?.data?.user?.resetToken,
+        resetToken: route?.params?.token,
         newPassword: data.password,
       };
       dispatch(ChangePasswordRequest(JSON.stringify(row)));
@@ -42,10 +43,18 @@ export default function ResetPassword({navigation}) {
   const isSuccess = async () => {
     if (ChangePasswordData?.response) {
       if (ChangePasswordData?.response.statusCode == 200) {
-        alert('Success');
+        ToastAndroid.showWithGravity(
+          'Your Password has been succefully changed',
+          ToastAndroid.SHORT,
+          ToastAndroid.CENTER,
+        );
         navigation.navigate(NAVIGATION_NAME.LOGIN);
       } else {
-        alert('Error');
+        ToastAndroid.showWithGravity(
+          'Somthing went wrong, Please Try Againg Some Time',
+          ToastAndroid.SHORT,
+          ToastAndroid.CENTER,
+        );
       }
     }
   };

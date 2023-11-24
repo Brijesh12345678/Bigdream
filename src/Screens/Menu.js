@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import {Themes} from '../Appdata/colors';
 import {NAVIGATION_NAME} from '../Appdata/NavigationName';
 import BottomNav from '../Componets/BottomNav';
@@ -17,6 +24,20 @@ const Menu = ({navigation}) => {
     getLocalData();
   }, []);
 
+  const logoutfun = () => {
+    Alert.alert('Logout', 'Are you want to logout.', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {text: 'OK', onPress: () => logout()},
+    ]);
+  };
+  const logout = async () => {
+    await AsyncStorage.clear();
+    navigation.replace(NAVIGATION_NAME.LOGIN);
+  };
   return (
     <>
       <View style={styles.container}>
@@ -25,9 +46,9 @@ const Menu = ({navigation}) => {
           onPress={() => navigation.navigate(NAVIGATION_NAME.REPORT)}>
           <View style={styles.userNameView}>
             <Text style={styles.mainTxt}>
-              {userdatas.email.substring(0, 1)}
+              {userdatas?.email?.substring(0, 1)}
             </Text>
-            <Text style={styles.usernametxt}>{userdatas.email}</Text>
+            <Text style={styles.usernametxt}>{userdatas?.email}</Text>
           </View>
         </TouchableOpacity>
         <View style={styles.settingNewsView}>
@@ -53,15 +74,7 @@ const Menu = ({navigation}) => {
           </TouchableOpacity>
         </View>
         {/* list start */}
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginTop: 10,
-            borderBottomWidth: 1,
-            paddingBottom: 10,
-          }}>
+        <View style={styles.logoutView}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Image
               source={require('../Assets/Images/credit_card.png')}
@@ -75,18 +88,10 @@ const Menu = ({navigation}) => {
             </TouchableOpacity>
           </View>
           <View>
-            <Text style={{fontSize: 30, fontWeight: 'bold'}}>{'>'}</Text>
+            <Text style={styles.arrowIcon}>{'>'}</Text>
           </View>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginTop: 10,
-            borderBottomWidth: 1,
-            paddingBottom: 10,
-          }}>
+        <View style={styles.logoutView}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Image
               source={require('../Assets/Images/person.png')}
@@ -97,18 +102,10 @@ const Menu = ({navigation}) => {
             </Text>
           </View>
           <View>
-            <Text style={{fontSize: 30, fontWeight: 'bold'}}>{'>'}</Text>
+            <Text style={styles.arrowIcon}>{'>'}</Text>
           </View>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginTop: 10,
-            borderBottomWidth: 1,
-            paddingBottom: 10,
-          }}>
+        <View style={styles.logoutView}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Image
               source={require('../Assets/Images/moon.png')}
@@ -119,7 +116,24 @@ const Menu = ({navigation}) => {
             </Text>
           </View>
           <View>
-            <Text style={{fontSize: 30, fontWeight: 'bold'}}>{'>'}</Text>
+            <Text style={styles.arrowIcon}>{'>'}</Text>
+          </View>
+        </View>
+        <View style={styles.logoutView}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Image
+              source={require('../Assets/Images/logout.png')}
+              style={styles.listIcon}
+              resizeMode="contain"
+            />
+            <TouchableOpacity onPress={() => logoutfun()}>
+              <Text style={{fontSize: 20, marginLeft: 20, color: 'black'}}>
+                Logout
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View>
+            <Text style={styles.arrowIcon}>{'>'}</Text>
           </View>
         </View>
         {/* list end */}
@@ -142,7 +156,7 @@ const Menu = ({navigation}) => {
           </Text>
         </View>
         <View>
-          <Text style={{fontSize: 30, fontWeight: 'bold'}}>{'>'}</Text>
+          <Text style={styles.arrowIcon}>{'>'}</Text>
         </View>
       </View>
       {/* Refer a friend End*/}
@@ -216,5 +230,19 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     padding: 20,
+  },
+  arrowIcon: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: Themes.AppTheme.black,
+    marginRight: 10,
+  },
+  logoutView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 10,
+    borderBottomWidth: 1,
+    paddingBottom: 10,
   },
 });

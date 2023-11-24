@@ -10,13 +10,13 @@ import Apps from './src/Screens/chandra';
 export default function App() {
   return (
     <>
-      {/* <Apps /> */}
-      <Provider store={store}>
+      <Apps />
+      {/* <Provider store={store}>
         <StatusBar backgroundColor={Themes.AppTheme.statusBar} />
         <NavigationContainer>
           <StackNavigation />
         </NavigationContainer>
-      </Provider>
+      </Provider> */}
     </>
   );
 }
